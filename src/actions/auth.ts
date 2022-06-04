@@ -38,3 +38,13 @@ const startRegisterWithEmailPasswordName = (name:string,email:string,password:st
             .catch((e) => Swal.fire("Error", e.message, "error"));
     }
 }
+const startGoogleLogin = () => {
+    return (dispatch:any) => {
+        firebase
+            .auth()
+            .signInWithPopup(gogleAuthProvider)
+            .then(({user}) => {
+                login(user?.uid, user?.displayName)
+            })
+    }
+}

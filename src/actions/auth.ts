@@ -42,9 +42,21 @@ const startGoogleLogin = () => {
     return (dispatch:any) => {
         firebase
             .auth()
+            //autentico con gogle
             .signInWithPopup(gogleAuthProvider)
             .then(({user}) => {
                 login(user?.uid, user?.displayName)
             })
+            .catch((err) => console.log(err))
     }
 }
+const startLogout = () => {
+    return async(dispatch:any) => {
+        //deslogeo el usuario
+        await firebase.auth().signOut();
+        dispatch(logout())
+    }
+}
+const logout = () => ({
+    type: types.logout
+})

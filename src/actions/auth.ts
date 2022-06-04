@@ -23,3 +23,18 @@ const startLoadingWithEmailPassword = (email:string, password:string) => {
             })
     }
 }
+const startRegisterWithEmailPasswordName = (name:string,email:string,password:string) => {
+    return (dispatch:any) => {
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(email,password)
+            .then(async({user})=> {
+                await user?.updateProfile({
+                    displayName: name
+                })
+                login(user?.uid, user?.displayName);
+                console.log(user);
+            })
+            .catch((e) => Swal.fire("Error", e.message, "error"));
+    }
+}
